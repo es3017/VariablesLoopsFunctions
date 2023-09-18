@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive JavaScript App</title>
+</head>
+<body>
+    <h1>Task 1: Variables</h1>
+    <div>
+        <label for="numberInput">Enter a number:</label>
+        <input type="number" id="numberInput">
+        <button onclick="updateQuantity()">Submit</button>
+    </div>
+    <p id="quantity"></p>
+    <div>
+        <label for="percentageInput">Enter a percentage:</label>
+        <input type="number" id="percentageInput">
+        <button onclick="calculatePercentage()">Submit</button>
+    </div>
+    <p id="output"></p>
+
+    <h1>Task 2: Grade Converter</h1>
+    <div>
+        <label for="gradeInput">Enter your grade (1-100):</label>
+        <input type="number" id="gradeInput">
+        <button onclick="convertGrade()">Submit</button>
+    </div>
+    <p id="grade"></p>
+
+    <h1>Task 3: Punishing Lines</h1>
+    <div>
+        <label for="professorName">Enter the punishing professor's name:</label>
+        <input type="text" id="professorName">
+    </div>
+    <div>
+        <label for="line">Enter the line to write:</label>
+        <input type="text" id="line">
+    </div>
+    <div>
+        <label for="numTimes">Enter the number of times to write the line:</label>
+        <input type="number" id="numTimes">
+        <button onclick="writeLines()">Write Lines</button>
+    </div>
+    <div id="lines"></div>
+
+    <h1>Task 4: Punishing Lines with DOM</h1>
+    <div id="task4">
+        <button onclick="writeLinesToDOM()">Write Lines to DOM</button>
+    </div>
+
+    <h1>Task 5: Punishing Lines with Arrow Function</h1>
+    <button onclick="writeLinesArrow()">Write Lines (Arrow Function)</button>
+    <div id="linesArrow"></div>
+
+    <h1>Task 6: Times Tables</h1>
+    <div>
+        <button onclick="printTimesTables()">Print Times Tables</button>
+    </div>
+    <div id="tables"></div>
+
+    <h1>Task 7: Hoisting</h1>
+    <div id="hoistingExplanation">
+    </div>
+
+    <script>
+        // Task 1
+        function updateQuantity() {
+            const number = document.getElementById("numberInput").value;
+            const quantityTag = document.getElementById("quantity");
+            quantityTag.textContent = `Quantity: ${number}`;
+        }
+
+        function calculatePercentage() {
+            const number = document.getElementById("numberInput").value;
+            const percentage = document.getElementById("percentageInput").value;
+            const result = (number * percentage) / 100;
+            const outputTag = document.getElementById("output");
+            outputTag.textContent = `${percentage}% of Quantity, ${number}, is ${result}`;
+        }
+
+        // Task 2
+        function convertGrade() {
+            const grade = document.getElementById("gradeInput").value;
+            let letterGrade;
+            
+            if (grade >= 91 && grade <= 100) {
+                letterGrade = "A";
+            } else if (grade >= 81 && grade <= 90) {
+                letterGrade = "B";
+            } else if (grade >= 71 && grade <= 80) {
+                letterGrade = "C";
+            } else if (grade >= 61 && grade <= 70) {
+                letterGrade = "D";
+            } else {
+                letterGrade = "F";
+            }
+
+            const outputTag = document.getElementById("grade");
+            outputTag.textContent = `(a) Grade: ${letterGrade}`;
+        }
+
+        // Task 3
+        function writeLines() {
+            const professorName = document.getElementById("professorName").value;
+            const line = document.getElementById("line").value;
+            const numTimes = document.getElementById("numTimes").value;
+            const linesContainer = document.getElementById("lines");
+
+            linesContainer.innerHTML = "";
+
+            for (let i = 1; i <= numTimes; i++) {
+                const lineText = `${i}: ${line}`;
+                const lineElement = document.createElement("p");
+                lineElement.textContent = lineText;
+                linesContainer.appendChild(lineElement);
+            }
+        }
+
+        // Task 4
+function writeLinesToDOM() {
+    const professorName = prompt("Enter the punishing professor's name:");
+    const line = prompt("Enter the line to write:");
+    const numTimes = prompt("Enter the number of times to write the line:");
+    const task4Container = document.getElementById("task4");
+
+    task4Container.innerHTML = "";
+
+    for (let i = 1; i <= numTimes; i++) {
+        const lineText = `${i}: ${line}`;
+        const lineElement = document.createElement("p");
+        lineElement.textContent = lineText;
+        task4Container.appendChild(lineElement);
+    }
+}
+
+        
+
+        // Task 5
+        const writeLinesArrow = () => {
+            const professorName = prompt("Enter the punishing professor's name:");
+            const line = prompt("Enter the line to write:");
+            const numTimes = prompt("Enter the number of times to write the line:");
+            const linesArrowContainer = document.getElementById("linesArrow");
+
+            linesArrowContainer.innerHTML = "";
+
+            for (let i = 1; i <= numTimes; i++) {
+                const lineText = `${i}: ${line}`;
+                const lineElement = document.createElement("p");
+                lineElement.textContent = lineText;
+                linesArrowContainer.appendChild(lineElement);
+            }
+        }
+
+        // Task 6
+        function printTimesTables() {
+            const tablesContainer = document.getElementById("tables");
+            tablesContainer.innerHTML = "";
+
+            // First Strategy (Nested Loop)
+            for (let factor1 = 1; factor1 <= 12; factor1++) {
+                for (let factor2 = 1; factor2 <= 12; factor2++) {
+                    const result = factor1 * factor2;
+                    const tableText = `${factor1} x ${factor2} = ${result}`;
+                    const tableElement = document.createElement("p");
+                    tableElement.textContent = tableText;
+                    tablesContainer.appendChild(tableElement);
+                }
+            }
+
+            // Second Strategy (Function within a Loop)
+            for (let factor1 = 1; factor1 <= 12; factor1++) {
+                createTables(factor1);
+            }
+
+            // Third Strategy (Function with Delimiter)
+            const allTables = (delimiter) => {
+                for (let factor = 1; factor <= 12; factor++) {
+                    createTables(factor, delimiter);
+                }
+            };
+
+            allTables(12);
+        }
+
+        function createTables(factor1, delimiter = 12) {
+            const tablesContainer = document.getElementById("tables");
+
+            for (let factor2 = 1; factor2 <= delimiter; factor2++) {
+                const result = factor1 * factor2;
+                const tableText = `${factor1} x ${factor2} = ${result}`;
+                const tableElement = document.createElement("p");
+                tableElement.textContent = tableText;
+                tablesContainer.appendChild(tableElement);
+            }
+        }
+
+        // Task 7
+        /*
+        a) Function Hoisting: Function declarations are hoisted to the top of their containing scope which means you can call a function before it's declared in the code.
+
+        Example:
+
+        hoistedFunction(); // This works even though the function is declared later in the code.
+
+        function hoistedFunction() {
+          console.log("I am hoisted!");
+        }
+        */
+
+        /*
+        b) Variable Hoisting: Variable hoisting means that variable declarations are also moved to the top of their containing scope, but only the declarations, not the assignments.
+
+        Example:
+
+        console.log(hoistedVariable); // This logs 'undefined' because only the declaration
+        */
+
+        /*
+        How ECMA standards resolved the issue of hoisting:
+        The ECMAScript standards introduced a concept called "Temporal Dead Zone (TDZ)" to provide more predictable behavior regarding hoisting. In the TDZ, variables are still hoisted to the top of their containing scope, but they cannot be accessed before their actual declaration in the code. This helps prevent unexpected behaviors caused by accessing variables before they are defined.
+
+        Example:
+
+        console.log(myVariable); // Throws a ReferenceError because myVariable is in the TDZ.
+        let myVariable = 42; // Variable declaration in TDZ.
+
+        This change in behavior enhances code safety and readability by making it clear when a variable is accessible.
+        */
+
+        const hoistingExplanation = document.getElementById("hoistingExplanation");
+        hoistingExplanation.innerHTML = `
+            <p><strong>a)Function Hoisting:</strong> Function declarations are hoisted to the top of their containing scope which means you can call a function before it's declared in the code.</p>
+            <p><strong>Example:</strong></p>
+            <pre>
+            hoistedFunction(); // This works even though the function is declared later in the code.
+
+            function hoistedFunction() {
+              console.log("I am hoisted!");
+            }
+            </pre>
+
+            <p><strong>b) Variable Hoisting:</strong> Variable hoisting means that variable declarations are also moved to the top of their containing scope, but only the declarations, not the assignments.</p>
+            <p><strong>Example:</strong></p>
+            <pre>
+            console.log(hoistedVariable); // This logs 'undefined' because only the declaration
+
+            // Variable hoisting example
+            var hoistedVariable = 42;
+            </pre>
+
+            <p><strong>How ECMA standards resolved the issue of hoisting:</strong> The ECMAScript standards introduced a concept called "Temporal Dead Zone (TDZ)" to provide more predictable behavior regarding hoisting. In the TDZ, variables are still hoisted to the top of their containing scope, but they cannot be accessed before their actual declaration in the code. This helps prevent unexpected behaviors caused by accessing variables before they are defined.</p>
+            <p><strong>Example:</strong></p>
+            <pre>
+            console.log(myVariable); // Throws a ReferenceError because myVariable is in the TDZ.
+            let myVariable = 42; // Variable declaration in TDZ.
+            </pre>
+        `
+    </script>
+</body>
+</html>
